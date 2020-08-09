@@ -1,0 +1,18 @@
+/**
+ * @file version.hpp
+ * @brief Project version announcement.
+ */
+
+/* See the license in the file "LICENSE.txt" in the root directory. */
+
+#ifndef PACK_PARS_VERSION_HPP_
+#define PACK_PARS_VERSION_HPP_
+
+#define PACK_PARS_MAJOR @PACK_PARS_MAJOR@
+#define PACK_PARS_MINOR @PACK_PARS_MINOR@
+#define PACK_PARS_PATCH @PACK_PARS_PATCH@
+
+#define PACK_PARS_VERSION \
+    (PACK_PARS_MAJOR * 10000 + PACK_PARS_MINOR * 100 + PACK_PARS_PATCH)
+
+#endif /* PACK_PARS_VERSION_HPP_ */
