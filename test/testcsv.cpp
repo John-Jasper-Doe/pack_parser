@@ -11,10 +11,10 @@ void test_csv() {
   ppars::file::csvfile csv;
 
   ppars::common::count_data dat;
-  dat.v9 = 9;
-  dat.ipfix = 100;
-  dat.other = 20;
-  dat.src = "127.0.0.1:2255";
+  dat.append_to(ppars::common::pt_v9, 9);
+  dat.append_to(ppars::common::pt_ipfix, 100);
+  dat.append_to(ppars::common::pt_other, 20);
+  dat.set_source("127.0.0.1:2255");
 
   csv.write(dat);
   assert(true);

@@ -46,8 +46,7 @@ csvfile::csvfile() noexcept {
 
 bool csvfile::write(common::count_data& data) noexcept {
   if (fstrm_->is_open()) {
-    *fstrm_ << common::timestamp() << "," << data.src << "," << data.v9 << "," << data.ipfix << ","
-            << data.other << "\n";
+    *fstrm_ << common::timestamp() << "," << data.as_str() << "\n";
     return true;
   }
   return false;
