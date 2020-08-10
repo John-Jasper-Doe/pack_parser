@@ -9,10 +9,10 @@
 #ifndef COMMON_TIME_HPP_
 #define COMMON_TIME_HPP_
 
-#include <ctime>
 #include <chrono>
-#include <sstream>
+#include <ctime>
 #include <iomanip>
+#include <sstream>
 
 /** @brief The namespace of the "Packet Parse" library. */
 namespace ppars {
@@ -25,7 +25,7 @@ namespace common {
  */
 inline tm time_now() noexcept {
   auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-  return  *std::localtime(&t);
+  return *std::localtime(&t);
 }
 
 /**
@@ -34,7 +34,7 @@ inline tm time_now() noexcept {
  * @param [in] str_fmt - string format of time.
  * @return Time on string of request format.
  */
-inline std::string fmt_time(const tm &st_tm, const std::string &str_fmt) noexcept {
+inline std::string fmt_time(const tm& st_tm, const std::string& str_fmt) noexcept {
   std::stringstream line;
   line << std::put_time(&st_tm, str_fmt.data());
   return line.str();
@@ -45,7 +45,7 @@ inline std::string fmt_time(const tm &st_tm, const std::string &str_fmt) noexcep
  * @param [in] str_fmt - string format of time.
  * @return Time on string of request format.
  */
-inline std::string timestamp(const std::string &str_fmt = "%Y_%m_%d-%H:%M:%S") noexcept {
+inline std::string timestamp(const std::string& str_fmt = "%Y_%m_%d-%H:%M:%S") noexcept {
   return fmt_time(time_now(), str_fmt);
 }
 
