@@ -44,9 +44,9 @@ csvfile::csvfile() noexcept {
     *fstrm_ << "DATE_TIME, SOURCE, V9, IPFIX, other\n";
 }
 
-bool csvfile::write(common::count_data& data) noexcept {
+bool csvfile::write(const std::string& data) noexcept {
   if (fstrm_->is_open()) {
-    *fstrm_ << common::timestamp() << "," << data.as_str() << "\n";
+    *fstrm_ << common::timestamp() << "," << data << "\n";
     return true;
   }
   return false;

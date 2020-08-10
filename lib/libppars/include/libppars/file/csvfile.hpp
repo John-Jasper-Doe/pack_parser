@@ -17,8 +17,6 @@
 #include <functional>
 #include <memory>
 
-#include <libppars/common/countdata.hpp>
-
 /** @brief The namespace of the "Packet Parse" library. */
 namespace ppars {
 /** @brief The namespace of the "File" */
@@ -37,10 +35,10 @@ public:
 
   /**
    * @brief Write into file.
-   * @param [in] data - data struct.
+   * @param [in] data - string of data.
    * @return "True" is all good, otherwise - "Falsse".
    */
-  bool write(common::count_data& data) noexcept;
+  bool write(const std::string& data) noexcept;
 };
 
 } /* file:: */
