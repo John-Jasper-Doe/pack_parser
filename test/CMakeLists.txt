@@ -6,5 +6,8 @@ file(GLOB_RECURSE PROJECT_SRC ${CMAKE_SOURCE_DIR}/lib/libppars/src/*.cpp)
 
 addtest("alltests"
   testcsv.cpp
+  testejector.cpp
+  testrecipient.cpp
+  testbyteorder.cpp
   ${PROJECT_SRC}
 )

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include <libppars/file/csvfile.hpp>
+#include <libppars/common/countdata.hpp>
 
 void test_csv() {
   std::cout << "test_csv" << std::endl;
@@ -16,6 +17,5 @@ void test_csv() {
   dat.append_to(ppars::common::pt_other, 20);
   dat.set_source("127.0.0.1:2255");
 
-  csv.write(dat);
-  assert(true);
+  csv.write(dat.as_str());
 }
