@@ -4,7 +4,7 @@
 
 namespace ppars {
 
-class parser{};
+class parser {};
 
 } /* ppars:: */
 
