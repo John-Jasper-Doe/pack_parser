@@ -38,7 +38,7 @@ public:
    * @param [in] data - string of data.
    * @return "True" is all good, otherwise - "Falsse".
    */
-  bool write(const std::string& data) noexcept;
+  bool write(std::string&& data) noexcept;
 };
 
 } /* file:: */

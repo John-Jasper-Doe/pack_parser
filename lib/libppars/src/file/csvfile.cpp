@@ -40,15 +40,19 @@ csvfile::csvfile() noexcept {
   fstrm_->open(CSV_FILE_NAME, std::ios::out | std::ios::app);
   fstrm_->unsetf(std::ios::skipws);
 
-  if (!is_exist)
-    *fstrm_ << "DATE_TIME, SOURCE, V9, IPFIX, other\n";
+  if (!is_exist) {
+    (*fstrm_) << "DATE_TIME,SOURCE,V9,IPFIX,other\n";
+    fstrm_->flush();
+  }
 }
 
-bool csvfile::write(const std::string& data) noexcept {
+bool csvfile::write(std::string&& data) noexcept {
   if (fstrm_->is_open()) {
-    *fstrm_ << common::timestamp() << "," << data << "\n";
+    (*fstrm_) << common::timestamp() + "," + data + "\n";
+    fstrm_->flush();
     return true;
   }
+
   return false;
 }
 
