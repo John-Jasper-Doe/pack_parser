@@ -11,8 +11,7 @@
 
 #include <chrono>
 #include <ctime>
-#include <iomanip>
-#include <sstream>
+#include <string>
 
 /** @brief The namespace of the "Packet Parse" library. */
 namespace ppars {
@@ -35,9 +34,9 @@ inline tm time_now() noexcept {
  * @return Time on string of request format.
  */
 inline std::string fmt_time(const tm& st_tm, const std::string& str_fmt) noexcept {
-  std::stringstream line;
-  line << std::put_time(&st_tm, str_fmt.data());
-  return line.str();
+  char str[100];
+  std::strftime(str, sizeof(str), str_fmt.data(), &st_tm);
+  return std::string(str);
 }
 
 /**
