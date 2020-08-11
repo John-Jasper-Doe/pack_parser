@@ -14,7 +14,6 @@
 #endif /* defined(__WIN32__) || defined(_WIN32) */
 
 #include <array>
-#include <iostream>
 #include <thread>
 
 #include <libppars/common/countdata.hpp>
@@ -58,7 +57,7 @@ unsigned short byte_order(unsigned short value) {
     res[1] = (reinterpret_cast<unsigned char*>(&value))[1];
   }
   else {
-    throw std::runtime_error("Undefined byte order");
+    throw "Undefined byte order";
   }
 
   return *reinterpret_cast<unsigned short*>(res);
@@ -80,7 +79,7 @@ common::pack_type_t pack_type(unsigned short pack_id) {
 } /* :: */
 
 recipient::recipient(unsigned short port, cntdat_ptr_t cntdat, pack_size_t ps) noexcept
-  : cntdat_{cntdat}, port_(port), stopped_{false}, openned_{false}, pack_size_(ps) {}
+  : cntdat_{std::move(cntdat)}, port_(port), stopped_{false}, openned_{false}, pack_size_(ps) {}
 
 recipient::recipient() noexcept
   : cntdat_{cntdat_ptr_t(new common::count_data())}
@@ -125,7 +124,7 @@ void recipient::exec() {
     }
   }
   else
-    throw std::runtime_error("The socket is not open");
+    throw "The socket is not open";
 }
 
 void recipient::worker() {
