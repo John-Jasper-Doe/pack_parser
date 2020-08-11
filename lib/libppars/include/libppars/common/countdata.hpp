@@ -42,19 +42,19 @@ public:
   void append_to(pack_type_t pt, unsigned long val) noexcept {
     switch (pt) {
     case pt_v9: {
-      std::unique_lock<std::mutex> lock(mtx_);
+      std::lock_guard<std::mutex> lock(mtx_);
       v9_ += val;
       break;
     }
 
     case pt_ipfix: {
-      std::unique_lock<std::mutex> lock(mtx_);
+      std::lock_guard<std::mutex> lock(mtx_);
       ipfix_ += val;
       break;
     }
 
     case pt_other: {
-      std::unique_lock<std::mutex> lock(mtx_);
+      std::lock_guard<std::mutex> lock(mtx_);
       other_ += val;
       break;
     }
@@ -62,20 +62,19 @@ public:
   }
 
   void set_source(std::string&& val) noexcept {
-    std::unique_lock<std::mutex> lock(mtx_);
+    std::lock_guard<std::mutex> lock(mtx_);
     src_ = std::move(val);
   }
 
   std::string as_str() noexcept {
-    std::string str{""};
-    str.append(src_ + "," + std::to_string(v9_) + "," + std::to_string(ipfix_) + ","
-               + std::to_string(other_));
+    std::string str{src_ + "," + std::to_string(v9_) + "," + std::to_string(ipfix_) + ","
+                    + std::to_string(other_)};
     return str;
   }
 
   /** @brief Cleaning counters. */
   void counts_clear() noexcept {
-    std::unique_lock<std::mutex> lock(mtx_);
+    std::lock_guard<std::mutex> lock(mtx_);
     v9_ = 0;
     ipfix_ = 0;
     other_ = 0;
