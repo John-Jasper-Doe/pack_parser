@@ -13,7 +13,8 @@
 #ifndef CORE_EJECTOR_HPP_
 #define CORE_EJECTOR_HPP_
 
-#include <libppars/file/csvfile.hpp>
+#include <functional>
+#include <memory>
 
 /* Forward declaration  for std */
 namespace std {
@@ -56,7 +57,6 @@ public:
 
 protected:
   ejector() noexcept;
-  void worker();
 };
 
 } /* core:: */
