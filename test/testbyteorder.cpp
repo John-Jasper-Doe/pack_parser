@@ -25,7 +25,7 @@ unsigned short byte_order(unsigned short value) {
     res[1] = (reinterpret_cast<unsigned char*>(&value))[1];
   }
   else
-    throw std::runtime_error("Undefined byte order");
+    throw "Undefined byte order";
 
   return *reinterpret_cast<unsigned short*>(res);
 }
