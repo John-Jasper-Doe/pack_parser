@@ -1,6 +1,3 @@
-
-#define NDEBUG
-#include <cassert>
 #include <iostream>
 
 bool is_littleendian() {
