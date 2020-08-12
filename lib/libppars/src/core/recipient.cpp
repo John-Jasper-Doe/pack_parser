@@ -63,7 +63,7 @@ unsigned short byte_order(unsigned short value) {
   return *reinterpret_cast<unsigned short*>(res);
 }
 
-common::pack_type_t pack_type(unsigned short pack_id) {
+common::counter_type_t pack_type(unsigned short pack_id) {
   switch (pack_id) {
   case 0x0009:
     return common::pt_v9;
@@ -139,12 +139,12 @@ void recipient::worker() {
     try {
       std::string src{std::string(inet_ntoa(server_addr.sin_addr)) + ":"
                       + std::to_string(ntohs(server_addr.sin_port))};
-      common::pack_type_t pt =
+      common::counter_type_t pt =
           pack_type(byte_order(*(reinterpret_cast<unsigned short*>(&buff[0]))));
       unsigned short sz = (pack_size_ == from_pack)
           ? byte_order(*(reinterpret_cast<unsigned short*>(&buff[2])))
           : static_cast<unsigned short>(n);
-      cntdat_->append_to(pt, sz);
+      cntdat_->inc_to(pt, sz);
       cntdat_->set_source(std::move(src));
     }
     catch (std::runtime_error&) {

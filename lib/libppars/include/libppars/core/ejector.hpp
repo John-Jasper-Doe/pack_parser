@@ -40,10 +40,14 @@ class ejector {
   bool stopped_;
 
 public:
-  /** @brief Constructor with param. */
+  /**
+   * @brief Constructor with param.
+   * @param [in] cntdat - pointer on data.
+   */
   explicit ejector(cntdat_ptr_t cntdat) noexcept;
   ~ejector() noexcept;
 
+  /** @brief Run for execution. */
   void exec();
 
 protected:

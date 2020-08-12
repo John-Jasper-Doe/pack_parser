@@ -27,6 +27,10 @@ public:
   csvfile() noexcept;
 
   virtual ~csvfile() noexcept override;
+  /**
+   * @brief Dumping data to a file.
+   * @param [in] data - dumped data.
+   */
   virtual void dumping(cntdat_ptr_t& data) noexcept override;
 };
 

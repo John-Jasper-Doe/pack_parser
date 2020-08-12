@@ -42,6 +42,15 @@ class count_data;
 /** @brief The namespace of the "Core" */
 namespace core {
 
+/**
+ * @brief How to read the packet size
+ *
+ * @details
+ * It was a little unclear about the size of the "V9" packet, according to the
+ * data one value was read, in the packet a different one was set (much less).
+ * I read the documentation, but I did not fully understand it, it seems like
+ * this is the number of records, and not bytes of data ... So I made a switch.
+ */
 typedef enum { from_pack, from_read } pack_size_t;
 
 /** @brief The ejector class. */
@@ -54,10 +63,15 @@ class recipient {
   thread_ptr_t worker_;
   cntdat_ptr_t cntdat_;
 
+  /** @brief Listening port. */
   unsigned short port_;
+
+  /** @brief Work stopped. */
   bool stopped_;
+  /** @brief Socket opened. */
   bool openned_;
 
+  /** @brief How to read the packet size */
   pack_size_t pack_size_;
 
 public:
@@ -65,11 +79,19 @@ public:
   explicit recipient(unsigned short port, cntdat_ptr_t cntdat, pack_size_t ps = from_pack) noexcept;
   ~recipient() noexcept;
 
+  /**
+   * @brief Opening a socket.
+   * @return "True" if success, otherwise - "False".
+   */
   bool open() noexcept;
+
+  /** @brief Run for execution. */
   void exec();
 
 protected:
   recipient() noexcept;
+
+  /** @brief Work thread. */
   void worker();
 };
 

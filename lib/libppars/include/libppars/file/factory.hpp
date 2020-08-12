@@ -23,13 +23,21 @@ namespace file {
 /* Forward declaration */
 class ifile;
 
+/** @brief The types of files that can be created. */
 enum class file_type { ft_csv };
 using file_type_t = file_type;
 
 /** @brief The factory class. */
 class factory {
 public:
+  /** @brief Get instance. */
   static factory& instance() noexcept;
+
+  /**
+   * @brief Create a file object of the specified type.
+   * @param [in] type - file types.
+   * @return File object.
+   */
   std::shared_ptr<ifile> creator(file_type_t type);
 
 protected:

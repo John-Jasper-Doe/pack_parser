@@ -27,8 +27,10 @@ class parser {
   ejector_ptr_t ejector_;
 
 public:
+  /** @brief Constructor with params. */
   explicit parser(unsigned short port) noexcept;
 
+  /** @brief Start all tasks and wait for completion. */
   void main_loop() noexcept;
 };
 

@@ -22,6 +22,8 @@ namespace ppars {
 namespace common {
 
 namespace details {
+
+/** @brief Data struct. */
 typedef struct {
   /** @brief Packet counter with data version V9. */
   unsigned long v9{0};
@@ -35,7 +37,8 @@ typedef struct {
 
 } /* details */
 
-typedef enum { pt_v9, pt_ipfix, pt_other } pack_type_t;
+/** @brief Counter types. */
+typedef enum { pt_v9, pt_ipfix, pt_other } counter_type_t;
 typedef details::data_t data_t;
 
 /** @brief The count_data struct */
@@ -47,8 +50,13 @@ class count_data {
 public:
   count_data() noexcept {}
 
-  void append_to(pack_type_t pt, unsigned long val) noexcept {
-    switch (pt) {
+  /**
+   * @brief Increment the given counter type.
+   * @param [in] ct - counter type.
+   * @param [in] val - value by how much to increment.
+   */
+  void inc_to(counter_type_t ct, unsigned long val) noexcept {
+    switch (ct) {
     case pt_v9: {
       std::lock_guard<std::mutex> lock(mtx_);
       data_.v9 += val;
@@ -69,11 +77,19 @@ public:
     }
   }
 
+  /**
+   * @brief Set of client information.
+   * @param [in] val - client information in string.
+   */
   void set_source(std::string&& val) noexcept {
     std::lock_guard<std::mutex> lock(mtx_);
     data_.src = std::move(val);
   }
 
+  /**
+   * @brief Get a structure with data.
+   * @return Data struct.
+   */
   data_t data() noexcept {
     std::lock_guard<std::mutex> lock(mtx_);
     data_t dat = data_;

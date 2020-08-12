@@ -12,9 +12,9 @@ void test_ejector() {
 
   std::shared_ptr<ppars::common::count_data> data =
       std::shared_ptr<ppars::common::count_data>(new ppars::common::count_data());
-  data->append_to(ppars::common::pt_v9, 9);
-  data->append_to(ppars::common::pt_ipfix, 100);
-  data->append_to(ppars::common::pt_other, 20);
+  data->inc_to(ppars::common::pt_v9, 9);
+  data->inc_to(ppars::common::pt_ipfix, 100);
+  data->inc_to(ppars::common::pt_other, 20);
   data->set_source("127.0.0.1:2255");
 
   ppars::core::ejector ej(data);
