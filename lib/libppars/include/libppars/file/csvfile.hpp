@@ -13,9 +13,7 @@
 #ifndef FILE_CSVFILE_HPP_
 #define FILE_CSVFILE_HPP_
 
-#include <fstream>
-#include <functional>
-#include <memory>
+#include <libppars/file/ifile.hpp>
 
 /** @brief The namespace of the "Packet Parse" library. */
 namespace ppars {
@@ -23,22 +21,13 @@ namespace ppars {
 namespace file {
 
 /** @brief The csvfile class. */
-class csvfile {
-  using fstrm_t = std::unique_ptr<std::fstream, std::function<void(std::fstream*)>>;
-
-  /** @brief Pointer of the csv-file. */
-  fstrm_t fstrm_;
-
+class csvfile : public ifile {
 public:
   /** @brief Constructor by default. */
   csvfile() noexcept;
 
-  /**
-   * @brief Write into file.
-   * @param [in] data - string of data.
-   * @return "True" is all good, otherwise - "Falsse".
-   */
-  bool write(std::string&& data) noexcept;
+  virtual ~csvfile() noexcept override;
+  virtual void dumping(cntdat_ptr_t& data) noexcept override;
 };
 
 } /* file:: */

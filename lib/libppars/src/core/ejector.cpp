@@ -13,6 +13,7 @@
 
 #include <libppars/common/countdata.hpp>
 #include <libppars/file/csvfile.hpp>
+#include <libppars/file/factory.hpp>
 
 /** @brief The namespace of the "Packet Parse" library. */
 namespace ppars {
@@ -24,10 +25,12 @@ static constexpr std::chrono::seconds PERIOD(20);
 } /* :: */
 
 ejector::ejector(cntdat_ptr_t cntdat) noexcept
-  : csv_{csvfile_ptr_t(new file::csvfile())}, cntdat_{std::move(cntdat)}, stopped_{false} {}
+  : csv_{file::factory::instance().creator(file::file_type::ft_csv)}
+  , cntdat_{std::move(cntdat)}
+  , stopped_{false} {}
 
 ejector::ejector() noexcept
-  : csv_{csvfile_ptr_t(new file::csvfile())}
+  : csv_{file::factory::instance().creator(file::file_type::ft_csv)}
   , cntdat_{cntdat_ptr_t(new common::count_data())}
   , stopped_{false} {}
 
@@ -40,8 +43,7 @@ void ejector::exec() {
     auto wrk = [this]() {
       while (!stopped_) {
         std::this_thread::sleep_for(PERIOD);
-        csv_->write(cntdat_->as_str());
-        cntdat_->counts_clear();
+        csv_->dumping(cntdat_);
       }
     };
 
