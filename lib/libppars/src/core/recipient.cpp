@@ -6,12 +6,12 @@
  * @date 2020
  */
 
-#if !defined(__WIN32__) || !defined(_WIN32)
+#ifdef linux
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
 #define SOCKET_ERROR -1
-#endif /* defined(__WIN32__) || defined(_WIN32) */
+#endif /* linux */
 
 #include <array>
 #include <thread>
@@ -27,11 +27,15 @@ namespace core {
 namespace {
 
 #if defined(__WIN32__) || defined(_WIN32)
+typedef int addr_size_t;
+
 void init_sockets() {
   WSADATA wsaData;
   WSAStartup(MAKEWORD(2, 2), &wsaData);
 }
 #else
+typedef unsigned int addr_size_t;
+
 void init_sockets() {}
 #endif /* defined(__WIN32__) || defined(_WIN32) */
 
@@ -128,13 +132,13 @@ void recipient::exec() {
 }
 
 void recipient::worker() {
-  std::array<unsigned char, 2048> buff;
+  std::array<char, 2048> buff;
 
   while (!stopped_) {
     sockaddr_in server_addr;
-    unsigned int server_addr_size = sizeof(server_addr);
-    ssize_t n = recvfrom(sock_, &buff[0], buff.size(), 0, reinterpret_cast<sockaddr*>(&server_addr),
-                         &server_addr_size);
+    addr_size_t server_addr_size = sizeof(server_addr);
+    int n = recvfrom(sock_, &buff[0], buff.size(), 0, reinterpret_cast<sockaddr*>(&server_addr),
+                     &server_addr_size);
 
     try {
       std::string src{std::string(inet_ntoa(server_addr.sin_addr)) + ":"

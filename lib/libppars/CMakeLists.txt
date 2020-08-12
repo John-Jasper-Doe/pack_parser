@@ -7,7 +7,12 @@ file(GLOB_RECURSE ALL_CXX_SOURCE_FILES *.cpp *.cxx)
 
 add_library(${LIB_NAME} SHARED ${ALL_CXX_SOURCE_FILES})
 target_include_directories(${LIB_NAME} PRIVATE ${LIBRARY_INCLUDE_PATH})
-target_link_libraries(${LIB_NAME} pthread)
+
+if(WIN32)
+  target_link_libraries(${LIB_NAME} wsock32 ws2_32)
+else()
+  target_link_libraries(${LIB_NAME} pthread)
+endif()
 
 set_target_properties(
   ${LIB_NAME}

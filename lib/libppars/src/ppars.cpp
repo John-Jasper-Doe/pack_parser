@@ -9,6 +9,8 @@
 #include <libppars/ppars.hpp>
 
 #include <libppars/common/countdata.hpp>
+#include <libppars/core/ejector.hpp>
+#include <libppars/core/recipient.hpp>
 
 /** @brief The namespace of the "Packet Parse" library. */
 namespace ppars {

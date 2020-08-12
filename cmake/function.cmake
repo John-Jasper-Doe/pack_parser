@@ -4,7 +4,13 @@
 function(addtest TESTNAME FIRSTSOURCE)
   add_executable(${TESTNAME} main.cpp ${FIRSTSOURCE} ${ARGN})
   target_include_directories(${TESTNAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-  target_link_libraries(${TESTNAME} pthread)
+  
+  if(WIN32)
+    target_link_libraries(${TESTNAME} wsock32 ws2_32)
+  else()
+    target_link_libraries(${TESTNAME} pthread)
+  endif()
+
   add_test(
     NAME ${TESTNAME}
     COMMAND ${CMAKE_COMMAND} --build . --target ${TESTNAME}
